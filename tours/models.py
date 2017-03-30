@@ -17,6 +17,11 @@ ACTIVE_STATUS = (
 )
 
 
+class TourManager(models.Manager):
+    def is_active(self):
+        return super(TourManager, self).get_queryset().filter(active=1)
+
+
 class Tour(models.Model):
     active = models.BooleanField(_('Active'), choices=ACTIVE_STATUS, default=1)
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL,
@@ -29,6 +34,8 @@ class Tour(models.Model):
     updated_at = models.DateTimeField(_('Updated at'), auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               verbose_name=_('Owner'))
+
+    objects = TourManager()
 
     def __unicode__(self):
         return self.name

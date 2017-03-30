@@ -15,11 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from categories.urls import router as CategoriesRouter
+from rest_framework import routers
+
+from categories.views import CategoryViewSet
+from tours.views import TourViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'categories', CategoryViewSet)
+router.register(r'tours', TourViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-auth/',
+        include('rest_framework.urls', namespace='rest_framework')),
     url(r'^auth/', include('rest_framework_social_oauth2.urls')),
-    url(r'^api/', include(CategoriesRouter.urls))
+    url(r'^api/', include(router.urls)),
 ]
