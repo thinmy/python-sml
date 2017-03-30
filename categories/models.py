@@ -10,13 +10,23 @@ ACTIVE_STATUS = (
 )
 
 
+class CategoryManager(models.Manager):
+    def is_active(self):
+        return super(CategoryManager, self).get_queryset().filter(active=1)
+
+
 class Category(models.Model):
     name = models.CharField(_('Category name'),
                             max_length=50, null=False, blank=False)
     active = models.BooleanField(_('Active'), choices=ACTIVE_STATUS, default=2)
+    objects = CategoryManager()
 
     def __unicode__(self):
         return self.name
 
+    def is_active(self):
+        return self.active == 1
+
     class Meta:
         verbose_name_plural = 'Categories'
+        ordering = ['name']
