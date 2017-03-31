@@ -1,0 +1,6 @@
+{{ object.name }}
+{{ object.category }}
+{{ object.active }}
+{{ object.owner }}
+{{ object.latitude }}
+{{ object.longitude }}

@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 from django.db import models
 from django.utils.translation import gettext as _
+
 
 from categories.models import Category
 

@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 
+from main import settings
 from categories.views import CategoryViewSet
 from tours.views import TourViewSet
 
@@ -31,4 +32,11 @@ urlpatterns = [
         include('rest_framework.urls', namespace='rest_framework')),
     url(r'^auth/', include('rest_framework_social_oauth2.urls')),
     url(r'^api/', include(router.urls)),
+    url(r'^search/', include('haystack.urls'))
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
